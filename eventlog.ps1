@@ -53,31 +53,3 @@ $REpositive  = $ARGS[7]         # Regular expression positive to search for text
   
   return $alert
 
-  
-
-  
-  
-
-From: Tarjei Utnes 
-Sent: onsdag 7. juni 2017 12.17
-To: Jan Inge Lønes <jan.inge.lones@evry.com>; Morten A. Steien <morten.steien@evry.com>; Ole Morten Johnsen <Ole.Johnsen@evry.com>
-Cc: Michael Breen <Michael.Breen@evry.com>; Torsten Granli <Torsten.Granli@evry.com>; Roar Johnsen <Roar.Johnsen@evry.com>
-Subject: Log monitorering
-
-Dette scriptet her, kan monitorere eventlogger fra sentralisert plass.
-Og holder også oversikt over hvor i fila den sist leste
-
-Den kan også sende mail.
-Vil tro det skal være ganske lett og modifisere dette til å kunne brukes for oss.
-
-https://gallery.technet.microsoft.com/scriptcenter/ed188912-1a20-4be9-ae4f-8ac46cf2aae4
-
-
-
-
-Kind regards
-Tarjei Utnes   
-Service Analytics 
-Tarjei.utnes@evry.com
-M +47 971 55 265
-
