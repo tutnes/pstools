@@ -10,10 +10,12 @@ Param(
   [Parameter(Mandatory=$True)][string]$computername,    # computername is required
   [string]$source,
   [Parameter(Mandatory=$True)][string]$eventid,
+  [string]$folder = "c:\scripts\xmllog",
   [string]$log = "Application",                         #Sets the logtype to Application by default, could be System or other
   [int]$seed_depth = 200,
   [string]$entrytype,                              # Max depth of search
-  [string]$instanceid
+  [string]$instanceid,
+  [switch]$logoutput = $false
 )
 # Check for instanceid
 $useinstanceid = $false
@@ -31,7 +33,7 @@ else {
 }
 
 # History is saved in a xml file with latest point in eventlog
-$hist_file = $computername + "_" + $log + "_" + $source + "_" + $eventid +   "_loghist.xml" 
+$hist_file = $folder + "\" + $computername + "_" + $log + "_" + $source + "_" + $eventid +   "_loghist.xml" 
 
  
 #see if we have a history file to use, if not create an empty $histlog 
@@ -103,9 +105,14 @@ $run_pass = {
      } 
      else {$hits = 0} 
     $duration = ($timer.elapsed).totalseconds 
-    write-host "Found $($hits) alert events in $($duration) seconds." 
-    "-"*60 
-    " " 
+    if ($hits -gt 0) {
+        write-host "Found $($hits) alert events in $($duration) seconds for eventid $($eventid)" 
+        "-"*60 
+        " " 
+    }
+    else {
+        write-host "Found no hits for alert with eventid $($eventid)" 
+    }
     if ($ShowEvents){$log_hits | fl | Out-String |? {$_}} 
 
  
@@ -113,7 +120,7 @@ $run_pass = {
 $loghist | export-clixml $hist_file 
  
     #Write to host if alerts are found 
-    if ($events_found){
+    if ($events_found -and $logoutput){
         write_alerts
     } 
  
