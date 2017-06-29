@@ -1,23 +1,38 @@
 ## Powershell Log Monitor Script ## 
 ## Contributing authors - mck74,mjolinor, 
 # Adapted from https://gallery.technet.microsoft.com/scriptcenter/ed188912-1a20-4be9-ae4f-8ac46cf2aae4
-##
+## Version 0.9.0 June 29 2017
+
+
 
 [CmdletBinding()]
 Param(
   [Parameter(Mandatory=$True)][string]$computername,    # computername is required
-  [Parameter(Mandatory=$True)][string]$source,
-  [Parameter(Mandatory=$True)][string]$eventid
+  [string]$source,
+  [Parameter(Mandatory=$True)][string]$eventid,
+  [string]$log = "Application",                         #Sets the logtype to Application by default, could be System or other
+  [int]$seed_depth = 200,
+  [string]$entrytype,                              # Max depth of search
+  [string]$instanceid
 )
-
-#param([switch]$ShowEvents = $false,[switch]$NoEmail = $false,[switch]
+# Check for instanceid
 $useinstanceid = $false
- 
- 
-$log = "Application" 
+if ($instanceid) {
+    $useinstanceid = $true
+}
+
+# Check for source
+$usesource = $false
+if ($source) {
+    $usesource = $true
+}
+else {
+    $source = "EmptySource"
+}
+
 # History is saved in a xml file with latest point in eventlog
 $hist_file = $computername + "_" + $log + "_" + $source + "_" + $eventid +   "_loghist.xml" 
-$seed_depth = 200 
+
  
 #see if we have a history file to use, if not create an empty $histlog 
 if (Test-Path $hist_file){$loghist = Import-Clixml $hist_file} 
@@ -46,11 +61,11 @@ $run_pass = {
     } 
       
     if ($n -lt 0){ 
-     Write-Host "Log index changed since last run. The log may have been cleared. Re-seeding index." 
-     $events_found = $true 
-     $alertbody += "`n Possible Log Reset $($_)`nEvent Index reset detected by Log Monitor`n" 
-     $n = $seed_depth 
-     } 
+        Write-Host "Log index changed since last run. The log may have been cleared. Re-seeding index." 
+        $events_found = $true 
+        $alertbody += "`n Possible Log Reset $($_)`nEvent Index reset detected by Log Monitor`n" 
+        $n = $seed_depth 
+    } 
       
     Write-Host "Processing $($n) events." 
      
@@ -58,15 +73,19 @@ $run_pass = {
      
     if ($useinstanceid){ 
         $log_hits = Get-EventLog -ComputerName $computername -LogName $log -Newest $n | 
-        
-        ? {($_.source -eq $source) -and ($_.instanceid -eq $instanceid)} 
+        ? {($_.source -eq $source) -and ($_.instanceid -eq $instanceid) -and ($_.eventid -eq $eventid)} 
     } 
-     
-    else {$log_hits = Get-EventLog -ComputerName $computername -LogName $log -Newest $n | 
+    
+    if ($usesource){
+        $log_hits = Get-EventLog -ComputerName $computername -LogName $log -Newest $n | 
         ? {($_.source -eq $source) -and ($_.eventid -eq $eventid)} 
-        
-    } 
-     
+    }
+    else {
+        $log_hits = Get-EventLog -ComputerName $computername -LogName $log -Newest $n | 
+        ? {$_.eventid -eq $eventid}    
+    }
+
+
     #save the current index to $loghist for the next pass 
     Write-Host "Index is $($index)`n"
     $loghist[$computername] = $index 
@@ -107,4 +126,4 @@ Write-Host "Log monitor started at $(get-date)"
 $start_pass = Get-Date 
 &$run_pass 
  
-#if $run_interval is set, calculate how long to sleep before the next pass 
+
