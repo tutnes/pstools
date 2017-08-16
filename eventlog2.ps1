@@ -12,8 +12,7 @@ Param(
   [Parameter(Mandatory=$True)][string]$eventid,
   [string]$folder = "c:\scripts\xmllog",
   [string]$log = "Application",                         #Sets the logtype to Application by default, could be System or other
-  [int]$seed_depth = 200,
-  [string]$entrytype,                              # Max depth of search
+  [int]$seed_depth = 200, # Max depth of search
   [string]$instanceid,
   [switch]$logoutput = $false,
   [string]$message
@@ -111,7 +110,7 @@ function printMessage {
       Write-Host "Evaluating message" $message
       $log_hits | % {
         if ($_.message -like "$message") {
-          write-host $_.message
+          write-host Found message: $_.message
         }
       }
     }
