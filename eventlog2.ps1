@@ -40,12 +40,22 @@ if ($message) {
 }
 
 # History is saved in a xml file with latest point in eventlog
-$hist_file = $folder + "\" + $computername + "_" + $log + "_" + $source + "_" + $eventid +   "_loghist.xml" 
+$temp_hist_file = $computername + "_" + $log + "_" + $source + "_" + $eventid +  "_" + $message + "_loghist.xml" 
 
+$invalidChars = [IO.Path]::GetInvalidFileNameChars() -join ''
+$re = "[{0}]" -f [RegEx]::Escape($invalidChars)
+$hist_file = $temp_hist_file -replace $re
+$hist_file = $folder + "\" + $hist_file
  
 #see if we have a history file to use, if not create an empty $histlog 
-if (Test-Path $hist_file){$loghist = Import-Clixml $hist_file} 
- else {$loghist = @{}} 
+if (Test-Path $hist_file){
+  Write-Host Found history in $hist_file
+  $loghist = Import-Clixml $hist_file
+} 
+ else {
+  Write-Host Found no historyfile
+  $loghist = @{}
+} 
  
  
 function write_alerts { 
@@ -96,15 +106,16 @@ $run_pass = {
     
     
     #Message evaluation
+function printMessage {
     if ($usemessage) {
       Write-Host "Evaluating message" $message
       $log_hits | % {
-        if ($_.message -like "*$message*") {
+        if ($_.message -like "$message") {
           write-host $_.message
         }
       }
     }
-    
+}
     
     
     #save the current index to $loghist for the next pass 
@@ -121,7 +132,9 @@ $run_pass = {
       $alertbody += $_ | select MachineName,EventID,Message 
         $alertbody += "`n"
      } 
-     } 
+     printMessage # Prints the messages, if there are any and they match the parameter
+     }
+
      else {$hits = 0} 
     $duration = ($timer.elapsed).totalseconds 
     if ($hits -gt 0) {
