@@ -15,7 +15,8 @@ Param(
   [int]$seed_depth = 200,
   [string]$entrytype,                              # Max depth of search
   [string]$instanceid,
-  [switch]$logoutput = $false
+  [switch]$logoutput = $false,
+  [string]$message
 )
 # Check for instanceid
 $useinstanceid = $false
@@ -30,6 +31,12 @@ if ($source) {
 }
 else {
     $source = "EmptySource"
+}
+
+# Check for message
+$usemessage = $false
+if ($message) {
+  $usemessage = $true
 }
 
 # History is saved in a xml file with latest point in eventlog
@@ -86,8 +93,20 @@ $run_pass = {
         $log_hits = Get-EventLog -ComputerName $computername -LogName $log -Newest $n | 
         ? {$_.eventid -eq $eventid}    
     }
-
-
+    
+    
+    #Message evaluation
+    if ($usemessage) {
+      Write-Host "Evaluating message" $message
+      $log_hits | % {
+        if ($_.message -like "*$message*") {
+          write-host $_.message
+        }
+      }
+    }
+    
+    
+    
     #save the current index to $loghist for the next pass 
     Write-Host "Index is $($index)`n"
     $loghist[$computername] = $index 
