@@ -51,3 +51,14 @@ Found 18 alert events in  seconds for eventid 63
 
 -seed_depth 200
 
+# Generic Powershell Tips
+These tips are for using the Generic Execution Plugin and monitoring services in that way
+
+### Checking if a W3SVC Service is running
+powershell -command "get-service -computername ${HOST} W3SVC"
+
+### Checking available space on the D-disk of a computer
+powershell -command "Get-Counter -computername ${HOST} -Counter '\LogicalDisk(d:)\% Free Space'"
+
+### Checking the number of running processes for a W3SVC
+powershell -command "@(get-process -computername ${HOST} -ea silentlycontinue W3SVC).count"
