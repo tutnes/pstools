@@ -52,7 +52,7 @@ Found 18 alert events in  seconds for eventid 63
 -seed_depth 200
 
 # Generic Powershell Tips
-![Image of Generic Execution configuration](/images/generic_execution.jpg?raw=true "Optional Title")
+![Image of Generic Execution configuration](/images/generic_execution_01.jpg?raw=true "Optional Title")
 These tips are for using the Generic Execution Plugin and monitoring services in that way
 
 ### Checking if a W3SVC Service is running
