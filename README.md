@@ -65,11 +65,19 @@ Regular Expression:
 ```
 (.*)Stopped|Paused|Running_Pending|Pause_Pending|Stop_Pending|Continue_Pending(.*)
 ```
+Success Definition:
+```
+on no match
+```
 
 ### Checking available space on the D-disk of a computer
-Command
-
+Command:
+```
 powershell -command "Get-Counter -computername ${HOST} -Counter '\LogicalDisk(d:)\% Free Space'"
+```
 
 ### Checking the number of running processes for a W3SVC
+Command:
+```
 powershell -command "@(get-process -computername ${HOST} -ea silentlycontinue W3SVC).count"
+```
