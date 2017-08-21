@@ -97,3 +97,35 @@ Command:
 ```
 powershell -command "@(get-process -computername ${HOST} -ea silentlycontinue W3SVC).count"
 ```
+
+### Checking the number of running processes for a W3SVC giving true or false
+Command:
+```
+powershell -command "@(get-process -computername ${HOST} -ea silentlycontinue W3SVC).count -gt 1"
+```
+
+Will return True if the number of processes are greater than 1, and will return false, if the number of processes are less than or equal to 1.
+
+Command:
+```
+powershell -command "@(get-process -computername ${HOST} -ea silentlycontinue W3SVC).count -eq 1"
+```
+
+Will return True if the number of processes are equal to 1, and will return false, if the number of processes are less than or greater than 1.
+
+Command:
+```
+powershell -command "@(get-process -computername ${HOST} -ea silentlycontinue W3SVC).count -lt 1"
+```
+
+Will return True if the number of processes are less than 1, and will return false, if the number of processes are equal to or greater than 1.
+
+Regular Expression:
+```
+True
+```
+
+Success Definition:
+```
+on match
+```
