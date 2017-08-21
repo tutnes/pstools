@@ -58,13 +58,13 @@ These tips are for using the Generic Execution Plugin and monitoring services in
 
 ### Checking if a W3SVC Service is running
 Command:
-
+```
 powershell -command "get-service -computername ${HOST} W3SVC"
-
+```
 Regular Expression:
-
+```
 (.*)Stopped|Paused|Running_Pending|Pause_Pending|Stop_Pending|Continue_Pending(.*)
-
+```
 
 ### Checking available space on the D-disk of a computer
 Command
