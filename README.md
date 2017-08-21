@@ -73,7 +73,7 @@ on no match
 ### Checking if a one or more MSSQL Services are running
 Command:
 ```
-powershell -command "get-service -computername ${HOST} -displayname \'MSSQL\'"
+powershell -command "get-service -computername ${HOST} -displayname 'MSSQL*'"
 ```
 Regular Expression:
 ```
