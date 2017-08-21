@@ -70,6 +70,21 @@ Success Definition:
 on no match
 ```
 
+### Checking if a one or more MSSQL Services are running
+Command:
+```
+powershell -command "get-service -computername ${HOST} -displayname \'MSSQL\'"
+```
+Regular Expression:
+```
+(.*)Stopped|Paused|Running_Pending|Pause_Pending|Stop_Pending|Continue_Pending(.*)
+```
+Success Definition:
+```
+on no match
+```
+
+
 ### Checking available space on the D-disk of a computer
 Command:
 ```
