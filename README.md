@@ -124,7 +124,22 @@ Regular Expression:
 ```
 True
 ```
+Success Definition:
+```
+on match
+```
 
+### Checking the age of a file against a specified age
+The command below will check the age of a file, to see whether it is less than 24 hours old. It will return True if that is the case
+
+Command:
+```
+powershell -command "(Get-Item '\\${HOST}\c$\path\to\file\logfile.txt').LastWriteTime" -lt (get-date).AddHours(-24)"
+```
+Regular Expression:
+```
+True
+```
 Success Definition:
 ```
 on match
