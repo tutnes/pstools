@@ -51,10 +51,11 @@ Found 18 alert events in  seconds for eventid 63
 
 -seed_depth 200
 
-# Generic Powershell Tips
+# Generic Powershell Tips with Generic Execution Monitor
 ![Image of Generic Execution configuration](/images/generic_execution_01.png?raw=true "Optional Title")
 
 These tips are for using the Generic Execution Plugin and monitoring services in that way. 
+${HOST} is replaced with the server, or servers that are added to the monitor, and they are replaced at run time.
 
 ### Checking if a W3SVC Service is running
 Command:
