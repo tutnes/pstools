@@ -1,7 +1,5 @@
 #This was inspired by
 #https://stackoverflow.com/questions/8423541/how-do-you-run-a-sql-server-query-from-powershell
-
-function Invoke-SQL {
     param(
         [string] $dataSource = ".\SQLEXPRESS",
         [string] $database = "MasterData",
@@ -29,4 +27,3 @@ function Invoke-SQL {
     $connection.Close()
     $dataSet.Tables
 
-}
