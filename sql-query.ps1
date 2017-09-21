@@ -6,13 +6,16 @@
         [string] $sqlCommand = $(throw "Please specify a query."),
         [string] $port,
         [string] $userId,
-        [string] $password
+        [string] $password,
+        [int] $windowsAuth = 0
       )
     if (!$port) {
     $port = 1433
     }
-    #"Integrated Security=SSPI; " +
-    $connectionString = "Data Source=$dataSource,$port; " +
+    if ($windowsAuth -eq 1) {
+    $connectionString = "Integrated Security=SSPI;"
+    }
+    $connectionString += "Data Source=$dataSource,$port; " +
             "Initial Catalog=$database;" +
             "User ID=$userId;" + "Password=$password"
 

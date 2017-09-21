@@ -1,4 +1,6 @@
 # Logs
+ignore-folder
+ignore-folder/*
 *.log
 *.xml
 *.pdf
