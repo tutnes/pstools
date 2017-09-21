@@ -5,12 +5,18 @@ function Invoke-SQL {
     param(
         [string] $dataSource = ".\SQLEXPRESS",
         [string] $database = "MasterData",
-        [string] $sqlCommand = $(throw "Please specify a query.")
+        [string] $sqlCommand = $(throw "Please specify a query."),
+        [string] $port,
+        [string] $userId,
+        [string] $password
       )
-
-    $connectionString = "Data Source=$dataSource; " +
-            "Integrated Security=SSPI; " +
-            "Initial Catalog=$database"
+    if (!$port) {
+    $port = 1433
+    }
+    #"Integrated Security=SSPI; " +
+    $connectionString = "Data Source=$dataSource,$port; " +
+            "Initial Catalog=$database;" +
+            "User ID=$userId;" + "Password=$password"
 
     $connection = new-object system.data.SqlClient.SQLConnection($connectionString)
     $command = new-object system.data.sqlclient.sqlcommand($sqlCommand,$connection)
