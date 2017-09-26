@@ -91,17 +91,17 @@ $run_pass = {
     #get the log entries 
      
     if ($useinstanceid){ 
-        $log_hits = Get-EventLog -ComputerName $computername -LogName $log -Newest $n  -entrytype $entrytype | 
-        ? {($_.source -eq $source) -and ($_.instanceid -eq $instanceid) -and ($_.eventid -eq $eventid)} 
+        $log_hits = Get-EventLog -ComputerName $computername -LogName $log -Newest $n | 
+        ? {($_.source -eq $source) -and ($_.instanceid -eq $instanceid) -and ($_.eventid -eq $eventid) -and ($_.entrytype -eq $entrytype)} 
     } 
     
     if ($usesource){
-        $log_hits = Get-EventLog -ComputerName $computername -LogName $log -Newest $n -entrytype $entrytype | 
-        ? {($_.source -eq $source) -and ($_.eventid -eq $eventid)} 
+        $log_hits = Get-EventLog -ComputerName $computername -LogName $log -Newest $n | 
+        ? {($_.source -eq $source) -and ($_.eventid -eq $eventid) -and ($_.entrytype -eq $entrytype)} 
     }
     else {
-        $log_hits = Get-EventLog -ComputerName $computername -LogName $log -Newest $n -entrytype $entrytype | 
-        ? {$_.eventid -eq $eventid}    
+        $log_hits = Get-EventLog -ComputerName $computername -LogName $log -Newest $n | 
+        ? {($_.eventid -eq $eventid) -and ($_.entrytype -eq $entrytype)}    
     }
     
     
