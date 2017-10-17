@@ -59,7 +59,7 @@ ${HOST} is replaced with the server, or servers that are added to the monitor, a
 All commands should be possible to test in a Powershell window before adding them to the Generic Execution Plugin (GEP).
 
 ### Ping a server
-
+Command:
 ```
 ping ${HOST}
 ```
