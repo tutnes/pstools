@@ -77,7 +77,7 @@ Alternative  regular expression:
 ```
 Success Definition:
 ```
-on no match
+on match
 ```
 ### Checking if a W3SVC Service is running
 Command:
