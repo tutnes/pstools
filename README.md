@@ -51,13 +51,34 @@ Found 18 alert events in  seconds for eventid 63
 
 -seed_depth 200
 
-# Generic Powershell Tips with Generic Execution Monitor
+# Generic Powershell and Cmd Tips with Generic Execution Monitor
 ![Image of Generic Execution configuration](/images/generic_execution_01.png?raw=true "Optional Title")
 
 These tips are for using the Generic Execution Plugin and monitoring services in that way. 
 ${HOST} is replaced with the server, or servers that are added to the monitor, and they are replaced at run time. 
 All commands should be possible to test in a Powershell window before adding them to the Generic Execution Plugin (GEP).
 
+### Ping a server
+
+```
+ping ${HOST}
+```
+Regular Expression:
+```
+(.*)Request timed out|Destination host unreachable(.*)
+```
+Success Definition:
+```
+on no match
+```
+Alternative  regular expression:
+```
+(.*)Reply from(.*)
+```
+Success Definition:
+```
+on no match
+```
 ### Checking if a W3SVC Service is running
 Command:
 ```
