@@ -1,3 +1,4 @@
+# inspiration from https://community.ipswitch.com/s/question/0D53600000fsgvrCAA/ssl-certificate-expiration-active-monitor-script
 param (
     [string]$url,
     [int]$timeoutMilliseconds = 30000
